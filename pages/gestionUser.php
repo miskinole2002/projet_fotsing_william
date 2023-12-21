@@ -1,5 +1,9 @@
 <?php 
 session_start();
+require_once('../utils/connexion.php');
+require_once('../functions/usercrud.php');
+$AllUser=getAllUser();
+//var_dump($AllUser);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +24,7 @@ session_start();
     <div class="container-fluid">
       
     <a class="navbar-brand" href="#">
-      <img src="../styles/img.jpg" alt="Logo" width="60" height="50" class="d-inline-block align-text-top">
+      <img src="../styles/DUSSOLIER.png" alt="Logo" width="150" height="120" class="d-inline-block align-text-top">
        <h2 class="logo">Dussollier</h2>
     </a>
   </div>
@@ -67,24 +71,37 @@ session_start();
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">user_name</th>
+      <th scope="col">email</th>
+      <th scope="col">fist Name</th>
+      <th scope="col">last Name</th>
+      <th scope="col">role_id</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <?php foreach( $AllUser as $value) {?>
+      <th scope="row"><?php echo $value[1]?></th>
+      <td><?php echo $value[2]?></td>
+      <td><?php echo $value[4]?></td>
+      <td><?php echo $value[5]?></td>
+      <td><?php echo $value[9]?></td>
+        
+     </tr>
+    
+  </tbody> <?php }?>
+</table>
 <form action="../results/gestionUserResult.php" method="post">
 <div class="mb-3">
-    <label for="user_name" class="form-label">entrez Le nom d utilisateur de a modifier</label>
+    <label for="user_name" class="form-label">entrez Le nom d utilisateur  a modifier</label>
     <input type="text" name="user_name" class="form-control" id="user_name" aria-describedby="emailHelp">
     <p style="color: red; font-size: 0.8rem;"><?php echo  isset($_SESSION['error']['user_name'])? $_SESSION['error']['user_name'] : ''?> </p>
-   
-  <div class="mb-3">
-    <label for="email" class="form-label">email</label>
-    <input type="text" name="email" class="form-control" id="email" aria-describedby="emailHelp">
-  </div>
-  <div class="mb-3">
-    <label for="fname" class="form-label">first name</label>
-    <input type="text" class="form-control" id="fname" name="fname" >
-  </div>
-  <div class="mb-3">
-    <label for="price" class="form-label">last name</label>
-    <input type="text" class="form-control" id="lname" name="lname"  >
-  </div>
+  
   <div class="mb-3">
     <label for="role_id" class="form-label">role_id</label>
     <input type="text" class="form-control" id="role_id"name="role_id"  >

@@ -44,7 +44,8 @@ if (isset($_POST)){
                 $_SESSION['authen']=[
                     'id'=>$userData['id'],
                     'role_id'=>$userData['role_id'],
-                    'token'=>$token
+                    'token'=>$token,
+                    
 
                 ];
                 var_dump($_SESSION['authen']);
@@ -83,7 +84,6 @@ if (isset($_POST)){
     $url='../pages/login.php';
     header('location:'.$url);
 }
-
 
 
 

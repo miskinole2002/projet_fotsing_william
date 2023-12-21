@@ -1,12 +1,55 @@
 <?php 
 session_start();
+//var_dump($_POST);
+//unset($_SESSION['panier']);
+if(isset($_POST)){
 
+if(!isset($_SESSION['panier']))
+{
+  $_SESSION['panier']=[];
+  // if(isset($_POST)){
+   
+    // $i=$_POST['id'];     
+    // $qte=$_POST['quantity'];
+    // $_SESSION['panier'][$i]=$qte ;
+
+  // }
+
+  
+}if(isset($_POST['id']))
+{
+ $i=$_POST['id'];
+  //var_dump($i);
+
+
+if(isset( $_SESSION['panier'][$i]))
+{
+  //unset($_SESSION['panier']);
+   
+ 
+  $_SESSION['panier'][$i]++;
+} else{  
+  //$qte=$_POST['quantity'];
+  $_SESSION['panier'][$i]=1;//$qte ;
+ 
+
+}
+
+$url='../pages/panier.php';
+    header('location:'.$url);
+}
+
+ 
+//var_dump($_SESSION['panier']);
+//var_dump($_SESSION);
+}
+
+//var_dump($_POST);
 //var_dump($_SESSION['authen']);
 require_once('../utils/connexion.php');
 require_once('../functions/usercrud.php');
 $myProduct=afficherProduct();
-//var_dump($myProduct);
-?>
+//var_dump($myProduct);?>
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
   <head><script src="/docs/5.3/assets/js/color-modes.js"></script>
@@ -166,13 +209,17 @@ $myProduct=afficherProduct();
         </div>
         <div class="col-sm-4 offset-md-1 py-4">
           <h4><a href="#"> <button type="button" class="btn btn-primary position-relative">
-  Profile
+  Profiles
   <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
     <span class="visually-hidden">New alerts</span>
   </span>
 </button></a></h4>
+
           <ul class="list-unstyled">
-          <?php  if($_SESSION['authen']['role_id']==2){?>
+          <?php if(empty ($_POST['img'])) {
+            
+          }?>
+          <?php  if($_SESSION['authen']['role_id']==2and !isset ($_POST['img'])  ){?>
         <li><a href="./gestionProduit.php"> <button type="button" class="btn btn-info">gestion produit</button></a></li><?php } else{
 
         }?>
@@ -188,8 +235,8 @@ $myProduct=afficherProduct();
   <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container">
       <a href="#" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        <strong>WS</strong>
+
+        <strong><img src="../styles/DUSSOLIER.png" alt="Logo" width="150" height="100" class="d-inline-block align-text-top"></strong>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -201,9 +248,15 @@ $myProduct=afficherProduct();
     <form method="post" action="accueil1.php" class="d-flex" role="search">
       <input name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
-      <p style="color: red; font-size: 0.8rem;"><?php echo  isset($_SESSION['errorSearch']['search'])? $_SESSION['errorSearch']['search'] : ''?> </p>
+      <p style="color: red; font-size: 0.8rem;"><?php //echo  isset($_SESSION['errorSearch']['search'])? $_SESSION['errorSearch']['search'] : ''?> </p>
     </form>
   </div>
+  <h4><a href="../pages/panier.php"> <button type="button" class="btn btn-primary position-relative">
+  panier <img src="../styles/panier.gif" alt=""  class="card-img-top" alt="..."  style="width: 2rem;">
+  <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+    <span class="visually-hidden">New alerts</span>
+  </span>
+</button></a></h4>
 </nav>
 </header>
 
@@ -214,96 +267,24 @@ $myProduct=afficherProduct();
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">bienvenue chez DussollierShop ,</h1>
         <p class="lead text-body-secondary">Le secret du bonheur est d accepter qu'on ne controlle rien du tout </p>
-        <p>
-        <?php  if($_SESSION['authen']['role_id']==2){?>
+        <p><?php if(empty ($_POST['img'])) {
+
+        }if($_SESSION['authen']['role_id']==2) {?>
+        <?php  if($_SESSION['authen']['role_id']==2 and !isset ($_POST['img'])){?>
           <a href="./gestionProduit.php" class="btn btn-primary my-2">Gestion de produit </a>
-          <a href="./gestionUser.php" class="btn btn-secondary my-2">Gestion des utilisateurs</a><?php }?>
+          <a href="./gestionUser.php" class="btn btn-secondary my-2">Gestion des utilisateurs</a><?php }}?>
         </p>
       </div>
     </div>
 
   </section>
-    
-        
-         <?php  //var_dump( $_POST) ;
-          
-require_once('../functions/usercrud.php');
-require_once('../functions/function.php');
-require_once('../utils/connexion.php');
-require_once('../functions/validation.php');
-// session_start();
+      
 
-//var_dump($search);
-
-
-
-
-
-if (isset($_POST)){
-
-$user=$_POST['search'];
-
-$search=userProductExistByName($user);
-
-
-    unset($_SESSION['errorSearch']);
-    $fieldExist=true;
-   
-    if($search['exist']==false) {
-    
-        $_SESSION['errorSearch'] =[
-           'search' => $search['message'],
-           ];
-          //  $url='accueil1.php';
-          //  header('location:'.$url);
-
-   }
-   if($search['exist']==true){
-        
-        $searchProduct=afficherProductSearch($user);
-       // var_dump($searchProduct);?>
-
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          <?php  foreach($searchProduct as $product){ ?>
-  
-    <div class="col">
-          <div class="card shadow-sm" style="width: 18rem;">
-            
-            <img src="<?php echo $product[4] ?>" class="card-img-top" alt="...">
-            <text x="50%" y="50%" fill="#eceeef" dy=".3em"> <H3><?php echo $product[1] ?></H3></text>
-            <div class="card-body">
-              <p class="card-text"><?php echo $product[5] ?> </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">acheter</button> -->
-                  <a href="#" class="card-link"><button type="submit" class="btn btn-primary">Acheter</button></a>
-                </div>
-                <small class="text-body-secondary"><?php echo $product[3] ?> $CAD</small>
-              </div>
-            </div>
-          </div>
-        </div>
-<?php } ?>
-    </div>
-    </div>
-</div>
-        
-           
-   
-    
-    
-    
-    <?php }
-          
-      else{    
-      ?>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           <?php  foreach($myProduct as $product){ ?>
-            <form method="" action="" >
+           
     <div class="col">
           <div class="card shadow-sm" style="width: 18rem;">
             
@@ -312,44 +293,41 @@ $search=userProductExistByName($user);
             <div class="card-body">
               <p class="card-text"><?php echo $product[5] ?> </p>
               <div class="d-flex justify-content-between align-items-center">
+                <small class="text-body-secondary"><?php echo $product[3] ?> $CAD</small>
                 <div class="btn-group">
                   <!-- <button type="button" class="btn btn-sm btn-outline-secondary">acheter</button> -->
-                  <a href="#" class="card-link"><button type="submit" class="btn btn-primary">Acheter</button></a>
+                  <a href="#" class="card-link"></a>
+
+                  <form action="" method="post">
+                  <input type="text" hidden name="action" value="addToCart">
+
+
+                    <input type="text" hidden name="id" value="<?php echo $product[0] ?>">
+                    <!-- <input type="text" name="quantity"> -->
+                   
+                    <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+
+                  
+                </form>
+
+ 
                 </div>
-                <small class="text-body-secondary"><?php echo $product[3] ?> $CAD</small>
+                
               </div>
             </div>
           </div>
+
         </div>
-<?php }} ?>
+<?php }?>
     </div>
     </div>
-</div>
-  </form>
   
-  <?php }?>
   
+ 
   
   
   
-<!--   
-          <div class="card" style="width: 18rem;">
-  <img src="<?php echo $myProduct['img_url'] ?>" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title"><?php echo $myProduct['name'] ?></h5>
-    <p class="card-text"><?php echo $myProduct['description'] ?></p>
   
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">prix : <?php echo $myProduct['price'] ?> $CAD</li>
-    
-  </ul>
-  </div>
-  
-  <div class="card-body">
-    <a href="#" class="card-link"><button type="submit" class="btn btn-primary">Acheter</button></a>
-   
-  </div>
-</div> -->
 
 
 

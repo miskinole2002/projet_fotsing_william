@@ -1,3 +1,7 @@
+<?php 
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +22,7 @@
     <div class="container-fluid">
       
     <a class="navbar-brand" href="#">
-      <img src="../styles/img.jpg" alt="Logo" width="60" height="50" class="d-inline-block align-text-top">
+      <img src="../styles/DUSSOLIER.png" alt="Logo" width="150" height="100" class="d-inline-block align-text-top">
        <h2 class="logo">Dussollier</h2>
     </a>
   </div>
@@ -102,6 +106,8 @@
  <a href="./deleteProduct.php"><button type="submit" class="btn btn-primary">Cliquer ici pour supprimer un produit</button></a>   
 </div> -->
     </div>
+  
+
     <div>
 
     </div>

@@ -10,7 +10,7 @@ $_SESSION['name']=$_POST["name"];
 $_SESSION['first_name']=$_POST["first_name"];
 $_SESSION['email']=$_POST["email"];
 
-
+var_dump($_POST);
 
 
 
@@ -89,7 +89,8 @@ if(isset($_POST))
         $newUser=createUser($data);
 
         var_dump($newUser);
-        
+        $url='../pages/login.php';
+        header('location:'.$url);
     } 
    
     else

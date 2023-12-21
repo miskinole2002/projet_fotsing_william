@@ -1,5 +1,9 @@
 <?php 
     session_start();
+    require_once('../utils/connexion.php');
+  require_once('../functions/usercrud.php');
+$myProduct=afficherProduct();
+//var_dump($myProduct);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +25,7 @@
     <div class="container-fluid">
       
     <a class="navbar-brand" href="#">
-      <img src="../styles/img.jpg" alt="Logo" width="60" height="50" class="d-inline-block align-text-top">
+      <img src="../styles/DUSSOLIER.png" alt="Logo" width="150" height="120" class="d-inline-block align-text-top">
        <h2 class="logo">Dussollier</h2>
     </a>
   </div>
@@ -106,6 +110,63 @@
  <a href="./deleteProduct.php"><button type="submit" class="btn btn-primary">Cliquer ici pour supprimer un produit</button></a>   
 </div> -->
     </div>
+
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> 
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">name</th>
+      <th scope="col">quantity</th>
+      <th scope="col">price</th>
+      <th scope="col">img_url</th>
+      <th scope="col">description</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <?php foreach( $myProduct as $product) {?>
+      <th scope="row"><?php echo $product[0]?></th>
+      <td><?php echo $product[1]?></td>
+      <td><?php echo $product[2]?></td>
+      <td><?php echo $product[3]?></td>
+      <td><img src="<?php echo $product[4] ?>" class="card-img-top" alt="..." style="width: 9rem;"></td>
+      <td><?php echo $product[5]?></td>
+
+        
+     </tr>
+    
+  </tbody> <?php }?>
+</table>
+
+
+    <?php  foreach($myProduct as $product){ ?>
+    <div class="col">
+          <div class="card shadow-sm" >
+            
+            <img src="<?php echo $product[4] ?>" class="card-img-top" alt="...">
+            <text x="50%" y="50%" fill="#eceeef" dy=".3em"> <H3><?php echo $product[1] ?></H3></text>
+            <div class="card-body">
+              <p class="card-text"><?php echo $product[5] ?> </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-body-secondary">ID =<?php echo $product[0] ?> </small>
+                <div class="btn-group">
+                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">acheter</button> -->
+                  <a href="#" class="card-link"></a>
+
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+        </div>
+    <?php }?></div>
+    
     <div>
 
     </div>

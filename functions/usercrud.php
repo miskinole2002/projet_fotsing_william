@@ -29,6 +29,18 @@ if ($stmt) {
           return 'bien';
     }else{return 'mal';}
 }
+// recuperer tout les valeurs dans un tableau
+function getAllUser( )
+{
+    global $conn;
+// Todo : changer pour requete preparee
+//SELECT * FROM user WHERE user_name = 'william2002';
+    $query = "SELECT * FROM user  ;";
+    $result = mysqli_query($conn, $query);
+    // avec fetch row : tableau indexé
+    $data = mysqli_fetch_all($result);
+    return $data;
+}
 function getUserByUsername( $user_name)
 {
     global $conn;
@@ -148,23 +160,33 @@ function getProductById( $id)
     global $conn;
 // Todo : changer pour requete preparee
 //SELECT * FROM user WHERE user_name = 'william2002';
-    $query = "SELECT * FROM user WHERE id = '$id' ;";
+    $query = "SELECT * FROM product WHERE id = '$id' ;";
     $result = mysqli_query($conn, $query);
     // avec fetch row : tableau indexé
     $data = mysqli_fetch_assoc($result);
     return $data;
 }
 
+function getProductByIdPannier($id)
+{
+    global $conn;
+// Todo : changer pour requete preparee
+//SELECT * FROM user WHERE user_name = 'william2002';
+    $query = "SELECT * FROM product WHERE id = '$id' ;";
+    $result = mysqli_query($conn, $query);
+    // avec fetch row : tableau indexé
+    $data = mysqli_fetch_assoc($result);
+    return $data;
+}
 
 function updateUserByAdmin($data){
     global $conn;
-    $query= "UPDATE user SET email=?,fname=?,lname=?,role_id=? WHERE user_name=?";
+    $query= "UPDATE user SET role_id=? WHERE user_name=?";
     if($stmt=mysqli_prepare($conn, $query)) {
         //lecture des marqueurs 
-        mysqli_stmt_bind_param($stmt,"sssis", 
-        $data["email"],
-        $data["fname"],
-        $data['lname'],
+        mysqli_stmt_bind_param($stmt,"is", 
+        
+        
         $data["role_id"],
         $data["user_name"] );
     
@@ -225,4 +247,5 @@ function updateUserByAdmin($data){
      return $data;
  }
 
+ // supprimer un produit dans le panier 
 ?>

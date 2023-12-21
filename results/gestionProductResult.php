@@ -19,6 +19,12 @@ if(isset($_POST)){
             
         var_dump($data);
         $createProduct= createProduct($data);
+
+       $url='../pages/accueil1.php';
+        header('location:'.$url);
  }
-}
+
+ 
+
+} 
 ?>

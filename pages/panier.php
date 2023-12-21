@@ -1,10 +1,41 @@
-<?php session_start();
+<?php 
+require_once('../functions/usercrud.php');
+require_once('../functions/function.php');
+require_once('../utils/connexion.php');
+require_once('../functions/validation.php');
+session_start();
+
+//var_dump($_SESSION['panier']);
+$panier=$_SESSION['panier'];
+$myProduct=afficherProduct();
+//var_dump($myProduct);
+ if(isset($_POST['id'])){
+
+var_dump($_POST['id']);
+$id=$_POST['id'];
+ unset($_SESSION['panier'][$id]);
+}
+
+
+
+
+
+?>
+
+
+
+
+
+
+
+<?php //session_start();
 require_once('../utils/connexion.php');
 require_once('../functions/usercrud.php');
-$myProduct=afficherProduct();
+//$myProduct=getProductByIdPannier($i);
 //var_dump($myProduct);
 
 ?>
+<?php if(!empty($_SESSION['panier'])){?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,16 +81,9 @@ $myProduct=afficherProduct();
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="../pages/accueil1.php"><button type="button" class="btn btn-primary">Home</button></a>
+          <a class="nav-link active" aria-current="page" href="../pages/accueil1.php"><button type="button" class="btn btn-primary">boutique</button></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="./gestionProduit.php"><button type="submit" class="btn btn-primary">gestion de produit</button></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../pages/updateProduct.php"><button type="submit" class="btn btn-primary">Cliquer ici pour modifier un produit</button></a>
-        </li>
-        
-       
+
       </ul>
       
     </div>
@@ -68,34 +92,26 @@ $myProduct=afficherProduct();
 </header>
 <div class="wrapper">
     <div class="form-box-login">
-      <center><h2>supprimer un poduit</h2></center>  
+      <center><h2>bienvenue dans votre panier</h2></center>  
         <div class="album py-5 bg-body-tertiary">
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-<form action="../results/deleteResult.php" method="post">
-  <div class="mb-3">
-    <label for="id" class="form-label">entrez L'ID de l'image</label>
-    <input type="text" name="id" class="form-control" id="id" aria-describedby="emailHelp">
-    <p style="color: red; font-size: 0.8rem;"><?php echo  isset($_SESSION['errorDelete']['id'])? $_SESSION['errorDelete']['id'] : ''?> </p>
-  </div>
-  
 
-  <button type="submit" class="btn btn-primary">Supprimer un produit</button>
-</form>
     </div>
     
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> 
 
     <table class="table">
+    
   <thead>
     <tr>
-      <th scope="col">ID</th>
+      
       <th scope="col">name</th>
       <th scope="col">quantity</th>
-      <th scope="col">price</th>
-      <th scope="col">img_url</th>
-      <th scope="col">description</th>
+      <th scope="col">image</th>
+      <th scope="col">Total price</th>
+      <th scope="col">supprimer</th>
 
 
     </tr>
@@ -103,48 +119,50 @@ $myProduct=afficherProduct();
   <tbody>
     
     <tr>
-      <?php foreach( $myProduct as $product) {?>
-      <th scope="row"><?php echo $product[0]?></th>
-      <td><?php echo $product[1]?></td>
-      <td><?php echo $product[2]?></td>
-      <td><?php echo $product[3]?></td>
-      <td><img  src="<?php echo $product[4] ?>" class="card-img-top" alt="..."  style="width: 9rem;"></td>
-      <td><?php echo $product[5]?></td>
 
+      <?php 
+       
+      foreach( $panier as $key=>$product) {
+       $pannierID= getProductByIdPannier($key);
+      
+       //var_dump($pannierID);
+      
+        ;?>
+
+      <td><?php echo $pannierID['name'] //$key $product[1]?></td>
+      <td><?php echo $product?></td>
+     
+      <td><img  src="<?php echo  $pannierID['img_url']  ?> " class="card-img-top" alt="..."  style="width: 9rem;"></td>
+       <td><?php  echo  $pannierID['price']*$product //$product[3]?>$ CAD</td>
+        <form action="" method="post">
+        <input type="text" hidden name="id" value="<?php echo $key ?>">
+      <td> <button type="submit" class="btn btn-light"> <img  src="../styles/supprimer.png"  class="card-img-top" alt="..."  style="width: 3rem;"></button></td>
+
+        </form>
         
-     </tr>
     
-  </tbody> <?php }?>
-</table>
-    <?php  foreach($myProduct as $product){ ?>
-    <div class="col">
-          <div class="card shadow-sm" style="width: 12rem;">
-            
-            <img src="<?php echo $product[4] ?>" class="card-img-top" alt="...">
-            <text x="50%" y="50%" fill="#eceeef" dy=".3em"> <H3><?php echo $product[1] ?></H3></text>
-            <div class="card-body">
-              <p class="card-text"><?php echo $product[5] ?> </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <small class="text-body-secondary">ID =<?php echo $product[0] ?> </small>
-                <div class="btn-group">
-                  <!-- <button type="button" class="btn btn-sm btn-outline-secondary">acheter</button> -->
-                  <a href="#" class="card-link"></a>
+     </tr> 
+    
+  </tbody> <?php
 
-                  
-
+  
+}?>
  
-                </div>
-                
-              </div>
-            </div>
-          </div>
 
-        </div>
-    <?php }?></div>
+</table>
+<button type="button" class="btn btn-info">payer</button>
+    </div>
     
     <div>
 
     </div>
+    <?php } else
+  {
+    echo 'le panier est vide';
+      $url='../pages/accueil1.php';
+    header('location:'.$url);
+
+  }?>
     
 </body>
 </html>

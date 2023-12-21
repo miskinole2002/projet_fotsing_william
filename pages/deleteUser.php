@@ -1,4 +1,11 @@
-<?php session_start()?>
+<?php session_start();
+
+
+require_once('../utils/connexion.php');
+require_once('../functions/usercrud.php');
+$AllUser=getAllUser();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +26,7 @@
     <div class="container-fluid">
       
     <a class="navbar-brand" href="#">
-      <img src="../styles/img.jpg" alt="Logo" width="60" height="50" class="d-inline-block align-text-top">
+      <img src="../styles/DUSSOLIER.png" alt="Logo" width="150" height="120" class="d-inline-block align-text-top">
        <h2 class="logo">Dussollier</h2>
     </a>
   </div>
@@ -66,6 +73,31 @@
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">user_name</th>
+      <th scope="col">email</th>
+      <th scope="col">fist Name</th>
+      <th scope="col">last Name</th>
+      <th scope="col">role_id</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <?php foreach( $AllUser as $value) {?>
+      <th scope="row"><?php echo $value[1]?></th>
+      <td><?php echo $value[2]?></td>
+      <td><?php echo $value[4]?></td>
+      <td><?php echo $value[5]?></td>
+      <td><?php echo $value[9]?></td>
+        
+     </tr>
+    
+  </tbody> <?php }?>
+</table>
 <form action="../results/deleteUserResult.php" method="post">
   <div class="mb-3">
     <label for="user_name" class="form-label">entrez Le Nom d'utilisateur </label>
@@ -78,6 +110,9 @@
   <button type="submit" class="btn btn-primary">Supprimer un utilisateur</button>
 </form>
     </div>
+    
+    </div>
+
     <div>
 
     </div>

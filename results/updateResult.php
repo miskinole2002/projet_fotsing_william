@@ -9,13 +9,16 @@ $productId=userProductExist($i);
 $fieldExist=true;
 
 if(isset($_POST)){
-     unset($_SESSION['errorUpdate']);
+    
 
     if(empty($_POST['id'] )){//and $_POST['name'] and $_POST['quantity']and $_POST['price'] and $_POST['img_url'] and $_POST['description']
 
         $url='../pages/upadeProduct.php';
         header('location:'.$url);
     }if($productId['exist']==false) {
+
+         unset($_SESSION['errorUpdate']);
+
         $_SESSION['errorUpdate'] =[
             'id' => $productId['message'],
            ];
@@ -36,6 +39,8 @@ if(isset($_POST)){
         ];
        $update=updateProduct($data);
     
+        $url='../pages/updateProduct.php';
+        header('location:'.$url);
     }
     
     
