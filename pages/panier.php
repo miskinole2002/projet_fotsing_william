@@ -17,7 +17,7 @@ $id=$_POST['id'];
 }
 
 
-
+$total=0;
 
 
 ?>
@@ -124,6 +124,7 @@ require_once('../functions/usercrud.php');
        
       foreach( $panier as $key=>$product) {
        $pannierID= getProductByIdPannier($key);
+       $total= $total+$pannierID['price']*$product ;
       
        //var_dump($pannierID);
       
@@ -141,16 +142,19 @@ require_once('../functions/usercrud.php');
         </form>
         
     
-     </tr> 
-    
-  </tbody> <?php
+     </tr> <?php } ?>
+     <th scope="col">TOTAL : <?php  echo $total ?> $ CAD </th>
+     
+     <th scope="col"> <a href="../pages/adress.php"><button type="button" class="btn btn-info">payer</button></a> </th>
+     <th scope="col"><img  src="../styles/dollar.png"  class="card-img-top" alt="..."  style="width: 3rem;"></th>
+  </tbody> 
 
   
-}?>
+
  
 
 </table>
-<button type="button" class="btn btn-info">payer</button>
+
     </div>
     
     <div>
