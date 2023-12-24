@@ -248,4 +248,36 @@ function updateUserByAdmin($data){
  }
 
  // supprimer un produit dans le panier 
+
+
+
+ //pour modifier directement une adresse
+ function createAddress($data)
+{
+    global $conn;
+    var_dump($conn);
+    $query = "INSERT INTO address VALUES (NULL,?,?,?,?,?,?);";
+   // $query="INSERT INTO address VALUES(NULL,?,?,?,?,?,?);";
+    var_dump($query);
+printf("Error message: %s\n", mysqli_error($conn));    
+    if($stmt=mysqli_prepare($conn,$query))
+    { var_dump($stmt);
+       mysqli_stmt_bind_param($stmt,"sissss",
+       $data["street_name"],
+       $data["street_nb"],
+       $data["country"],
+       $data["city"],
+       $data["zipcode"],
+       $data["province"],
+
+    );
+        $william=mysqli_stmt_execute($stmt);
+        return $william;
+    }
+    else{
+        return"mal";
+
+    }
+    
+}
 ?>
