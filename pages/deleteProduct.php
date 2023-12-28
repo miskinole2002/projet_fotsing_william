@@ -29,18 +29,7 @@ $myProduct=afficherProduct();
        <h2 class="logo">Dussollier</h2>
     </a>
   </div>
-    <!-- <nav class="navigation">
-    <a href="./gestionProduit.php"><button type="submit" class="btn btn-primary">gestion de produit</button></a>
-    <a href="./updateProduct.php"><button type="submit" class="btn btn-primary">Cliquer ici pour modifier un produit</button></a> -->
-        <!-- <a href=""></a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">contact</a> -->
-        <!-- <a href="../pages/accueil1.php"><button class="btnLogin-popup">home</button></a> -->
-
-
-
-    <!-- </nav> -->
+ 
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     

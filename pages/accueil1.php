@@ -7,13 +7,7 @@ if(isset($_POST)){
 if(!isset($_SESSION['panier']))
 {
   $_SESSION['panier']=[];
-  // if(isset($_POST)){
-   
-    // $i=$_POST['id'];     
-    // $qte=$_POST['quantity'];
-    // $_SESSION['panier'][$i]=$qte ;
 
-  // }
 
   
 }if(isset($_POST['id']))
@@ -245,10 +239,10 @@ $myProduct=afficherProduct();
   </div>
   <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
-    <form method="post" action="accueil1.php" class="d-flex" role="search">
+    <form method="post" action="../results/souvenir.php" class="d-flex" role="search">
       <input name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success" type="submit">Search</button>
-      <p style="color: red; font-size: 0.8rem;"><?php //echo  isset($_SESSION['errorSearch']['search'])? $_SESSION['errorSearch']['search'] : ''?> </p>
+      <p style="color: red; font-size: 0.8rem;"><?php ; echo  isset($_SESSION['errorSearch']['search'])? $_SESSION['errorSearch']['search'] : ''   ;unset($_SESSION['errorSearch'])?> </p>
     </form>
   </div>
   <h4><a href="../pages/panier.php"> <button type="button" class="btn btn-primary position-relative">
